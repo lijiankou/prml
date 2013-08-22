@@ -5,4 +5,19 @@
 如何只利用局部核解决问题？ 即如何通过少量核求解问题？
 \item 什么是无穷维？
 \item 对偶表示的好处?
+\item 为什么提出svm?
+\item svm为什么需要正定核?
+\item rvm、type2极大似然估计、高斯过程的关系?
 \end{enumerate}
+
+\section{最大间隔分类器}
+\subsection{损失函数}
+\begin{equation}
+L(w) = \sum_{n=1}^N E_\infty(y(x_n)t_n - 1) + \lambda||w||^2
+\end{equation}
+\section{重叠分类分布}
+
+\subsection{损失函数}
+\begin{equation}
+L(w) = C\sum_{n=1}^N\xi_n + \frac{1}{2}||w||^2
+\end{equation}
