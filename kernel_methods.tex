@@ -1,0 +1,95 @@
+\chapter{Kernel Methods}
+\section{问题}
+\begin{enumerate}
+\item 什么是核？
+\item 什么是高斯过程?
+\item 为什么使用高斯过程?
+\item P292 固定核？
+\item 对偶形式的表达，出现了参数个数的变化，由$|w|$变为
+$|a|$,是否会过拟合，能带来哪些好处，特征多的影响，特征少的
+影响。例如文档分类，特征多，训练集少。
+\end{enumerate}
+\section{核}
+\begin{enumerate}
+\item 高斯核
+\begin{equation}
+k(x_m, x_n) = exp(-||x_m - x_n||^2/2\sigma^2)
+\end{equation}
+\item 指数核
+\begin{equation}
+k(x_m, x_n) = exp(-\theta|x_m - x_n|)
+\end{equation}
+\end{enumerate}
+
+\section{对偶表示}
+\subsection{线性回归}
+\begin{equation}
+y(x) = w^T\phi(x)
+\end{equation}
+\subsection{对偶表示}
+\begin{equation}
+y(x) = a^T\Phi\phi(x) = a^Tk(x)
+\end{equation}
+\subsection{二者之间的关系}
+\begin{equation}
+J(a) = \frac{1}{2}\sum_{n=1}^N(k(x_n)^Ta - t_n)^2
+= \frac{1}{2}||\Phi\Phi^Ta - t||^2
+\end{equation}
+
+\begin{equation}
+J(w) = \frac{1}{2}\sum_{n=1}^N(\phi(x_n)^Tw - t_n)^2
+= \frac{1}{2}||\Phi w - t||^2
+\end{equation}
+
+\subsection{协方差矩阵}
+
+\begin{equation}
+cov(y) = E(yy^T) = E(\Phi ww^T\Phi^T)
+= \Phi E(ww^T) \Phi^T
+= \Phi cov(w)\Phi^T
+\end{equation}
+
+\begin{equation}
+C_{N+1} = \begin{pmatrix}
+C_N & k\\
+k^T & c
+\end{pmatrix}
+\end{equation}
+
+对偶形式的优点是，不用显示的写出特征空间向量，只关心
+$k(x_m, x_n)$, 核函数完成了由特征空间到核空间的转化。
+最重要的是，可以使用不同的核函数进行替换。
+
+\section{高斯过程}
+\begin{enumerate}
+\item 高斯过程是定义在y上联合分布服从高斯分布的概率分布,
+简单说就是高斯过程就是
+定义在y上的高斯分布。高斯过程可以由完全由二次统计决定，即均值和方差。
+根据高斯分布的性质，高斯分布的边缘分布和条件分布都是高斯分布。
+y的取值范围是R，因此是一个无穷维。在实际应用中，只考虑训练集大小
+的维度。
+回归问题的目标是$p(y_{N+1}) = N(y_{N+1}|\mu_{N+1}, \sigma_{N+1})$。
+因此用高斯过程解决回归问题的关键是如何求出均值和方差。
+高斯过程中的协方差$E[y(x_n)y(x_m)]$可以用核的方式给出来。
+
+定一个实矩阵 A，矩阵 $A^TA$ 是 A 的列向量的格拉姆矩阵，
+而矩阵$AA^T$ 是 A 的行向量的格拉姆矩阵。
+\item 高斯过程与核函数\\
+高斯过程协方差矩阵自然的与核函数联系在一起。
+
+\end{enumerate}
+\section{Summary}
+\begin{enumerate}
+\item 高斯过程与线性回归之间的对偶
+\item 高斯过程与隐变量，对于输出y，y和y之间
+实际上是有关系的，通过指定条件w(相当于一个隐变量)，
+从而使得y只依赖于w和x，与产生式模型的比较。
+\item 高斯过程与线性模型\\
+线性模型用w表示了x和y之间的关系，并且通过w之间的
+协方差表示y之间的协方差。高斯过程抛弃了w，直接表示
+y之间的关系，这种关系通过核表示出来。高斯过程用核$k(x_m,x_n)$
+取代了线性模型中的w。
+\item 回归与分类，回归问题+一个激活函数，转变为分类问题
+\end{enumerate}
+
+

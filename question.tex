@@ -1,0 +1,19 @@
+\chapter{Question}
+\section{问题}
+\begin{enumerate}
+\item PCA降维与隐变量降维之间的关系?\\
+\item 矩阵稀疏什么时候好，什么时候坏？\\
+一般稀疏的矩阵容易处理，网络社团算法一般都是在
+稀疏矩阵中做的。对于推荐问题，稀疏以后就面临过拟合，推荐不准确的困难。
+\item 似然函数的写法?\\
+回归问题、产生式模型、判别式模型
+\begin{equation}
+p(D|w) = \prod^N_{n=1} p(y_n|w^Tx_n)
+\end{equation}
+分类问题
+\begin{equation}
+p(D|\theta) = \prod_{n=1}^N p(x_n, y_n|\theta)
+= \prod_{n=1}^Np(x_n|\theta)p(y_n)
+\end{equation}
+\item 高斯过程图模型?\\
+\end{enumerate}

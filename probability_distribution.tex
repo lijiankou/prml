@@ -1,0 +1,111 @@
+\chapter{Probability Distribution}
+
+\section{高斯分布}
+\begin{equation}
+N(x|\mu, \Sigma), \Lambda \equiv \Sigma^{-1}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+x = \begin{pmatrix}
+ x_a\\ 
+ x_b
+  \end{pmatrix},
+\mu = 
+\begin{pmatrix}
+ \mu_a \\ 
+ \mu_b
+  \end{pmatrix}
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\Sigma = \begin{pmatrix}
+\Sigma_{aa}&\Sigma_{ab}\\
+\Sigma_{ba}&\Sigma_{bb}
+\end{pmatrix},
+\Lambda = 
+\begin{pmatrix}
+\Lambda_{aa}& \Lambda_{ab}\\
+\Lambda_{ba}& \Lambda_{bb}
+\end{pmatrix}
+\end{aligned}
+\end{equation}
+
+\subsection{条件分布}
+\begin{equation}
+\begin{aligned}
+p(x_a|x_b) = N(x_a|\mu_{a|b}, \Lambda_{aa}^{-1})
+\\
+\mu_{a|b} = \mu_a - \Lambda_{aa}^{-1}\Lambda_{ab}(x_b - \mu_b)
+\end{aligned}
+\end{equation}
+
+\subsection{边缘分布}
+\begin{equation}
+\begin{aligned}
+p(x_a) = N(x_a|\mu_a, \Sigma_{aa})
+\end{aligned}
+\end{equation}
+
+\section{贝叶斯推理}
+\begin{equation}
+p(x) = N(x|\mu, \Lambda^{-1})
+\end{equation}
+
+\begin{equation}
+p(y|x) = N(y|Ax + b, L^{-1})
+\end{equation}
+
+\begin{equation}
+p(y) = N(y|A\mu + b, L^{-1} + A\Lambda^{-1}A^T)
+\end{equation}
+
+\begin{equation}
+p(x|y) = N(x|\Sigma\{A^TL(y-b) + \Lambda\mu\}, \Sigma)
+\end{equation}
+
+\begin{equation}
+\Sigma = (\Lambda + A^TLA)^{-1}
+\end{equation}
+
+\subsection{指数族}
+
+\begin{enumerate}
+\item 指数族
+\begin{equation}
+p(x|\eta) = h(x)g(\eta)exp\{\eta^Tu(x)\}
+\end{equation}
+\end{enumerate}
+
+\subsection{极大似然估计和充分统计}
+
+\begin{enumerate}
+\item 似然函数
+\begin{equation}
+p(X|\eta) = (\prod_{n=1}^Nh(x_n))g(\eta)^N \exp \{
+\eta^T \samplesum u(x_n)
+\}
+\end{equation}
+\item 充分统计
+\begin{equation}
+-\nabla\ln(\eta_{ML}) = \frac{1}{N}\samplesum{u(x_n)}
+\end{equation}
+\end{enumerate}
+
+\subsection{共轭先验}
+\begin{equation}
+p(\eta|x, v) = f(x, v)g(\eta)^v\exp\{v\eta^Tx\}
+\end{equation}
+
+
+\subsection{问题}
+\begin{enumerate}
+\item 如何根据2.228的定义求出$\eta_{ML}$?\\
+根据公式2.203, 2.217以及2.223可以知道，$g(\eta)$与均值与方差的关系，
+因此只要我们知道了均值
+与方差就可以知道$\eta_{ML}$。$\ln g(\eta)$称作配分函数，
+配分函数的一个很好性质就是它的导数就$E(u(x))$,二次导
+数是$var(u(x))$,因此由2.228可以得到$\eta$。
+\end{enumerate}

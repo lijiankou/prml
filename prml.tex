@@ -1,0 +1,70 @@
+\documentclass[graybox, envcountchap]{styles/svmult}
+\usepackage{CJKutf8}
+\author{lijiankoucoco@163.com}
+\title{Machine Learning}
+\usepackage{amssymb,amsmath,bm}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\usepackage{textcomp}
+\newcommand\abs[1]{\left\lvert#1\right\rvert}
+\usepackage{longtable}
+\usepackage{ulem}
+\usepackage{algorithm2e}
+\usepackage{tocbibind}
+\renewcommand{\bibname}{References}
+%\usepackage{mathptmx}        % selects Times Roman as basic font
+\usepackage{helvet}          % selects Helvetica as sans-serif font
+\usepackage{courier}         % selects Courier as typewriter font
+\usepackage{makeidx}         % allows index generation
+\usepackage{graphicx}        % standard LaTeX graphics tool
+\usepackage{multicol}        % used for the two-column index
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+\usepackage[bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks=true,
+            linkcolor=blue,
+            anchorcolor=blue,
+            citecolor=blue
+           ]{hyperref}
+
+\newcommand{\samplesum}{\sum_{n=1}^N}
+\newcommand{\sampleprod}{\prod_{k=1}^K}
+
+\makeindex             % used for the subject index
+
+\begin{document}
+\begin{CJK}{UTF8}{gkai}
+\frontmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{titlepage}
+\include{preface}
+\tableofcontents
+\include{notation}
+\mainmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{introduction}
+\include{probability_distribution}
+\include{linear_models_for_regression}
+\include{linear_models_for_classification}
+\include{neural_networks}
+\include{kernel_methods}
+\include{sparse_kernel_machines}
+\include{graphical_models}
+\include{mixture_models_and_em}
+\include{approximate_inference}
+\include{sampling_methods}
+\include{continuous_latent_variables}
+\include{sequential_data}
+\include{combining_models}
+\include{question}
+
+
+\backmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+%\include{appendix}
+\include{glossary}
+\printindex
+\clearpage
+\end{CJK}
+
+\bibliographystyle{plain}
+\bibliography{mybib}
+
+\end{document}
