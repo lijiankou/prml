@@ -5,4 +5,26 @@
 \item 从自由度理解PCA
 \item PCA、PPCA和FA\\
 PCA强调数据空间到隐空间，PPCA和FA强调隐空间到数据空间
+\item PCA与fisher算法之间是什么关系?(PCA无监督、fisher有监督)
+\item PCA与岭回归
 \end{enumerate}
+\section{PCA}
+\begin{equation}
+J(W,Z) = \frac{1}{N}\sum_{n=1}^N||x_i - Wz_i||^2
+\end{equation}
+\begin{equation}
+J(W,Z) = ||\Phi - ZW^T||^2_F
+\end{equation}
+佛罗贝尼乌斯范数(Frobenius norm)
+\begin{equation}
+||A||_F = \sqrt{\sum_{n=1}^N\sum_{m=1}^Ma_{nm}^{2}} = \sqrt{tr(A^TA)}
+ = ||A(:)||_2
+\end{equation}
+
+\subsection{最大化方差}
+\begin{equation}
+var(ux) = \frac{1}{N}
+\sum_{n=1}^N\{u_1^Tx_n - u_1^T\bar{x}\}^2 = u_1^TSu_1
+\end{equation}
+\section{PPCA}
+\section{FA}
