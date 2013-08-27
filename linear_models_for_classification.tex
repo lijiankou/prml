@@ -1,4 +1,231 @@
-\chapter{Linear models for classification}
+\chapter{Linear Models for Classification}
+\section{输入变量是离散型}
+\subsection{联合分布}
+\begin{enumerate}
+\item y服从伯努利分布(二分类)
+\begin{equation}
+\begin{aligned}
+p(x, y) = p(y)p(x|y) = \pi^y(1-\pi)^{1-y}
+p(x|\mu_0)^{1-y}p(x|\mu_1)^y
+= [(1-\pi)p(x|\mu_0)]^{1-y}[\pi p(x|\mu_1)]^y
+\end{aligned}
+\end{equation}
+\begin{enumerate}
+\item x服从伯努利分布
+\begin{equation}
+p(x, y) =[(1-\pi)\mu_0^x(1-\mu_0)^{1-x}]^{1-y}
+[\pi\mu_1^x(1-\mu_1)^{1-x}]^y
+\end{equation}
+\item x服从离散分布
+\begin{equation}
+p(x, y) =[(1-\pi)\prod_{k=1}^K\mu_{0k}^{x_k}]^{1-y}
+[\pi \prod_{k=1}^K\mu_{1k}^{x_k}]^y
+\end{equation}
+\end{enumerate}
+
+\item y服从离散分布(多分类)
+\begin{equation}
+p(x, y) = p(y)p(x|y) = \prod_{k=1}^K\pi_k^{y_k}
+\prod_{k=1}^Kp(x|\theta_k)^{y_k}
+=\prod_{k=1}^K[\pi_kp(x|\theta_k)]^{y_k}
+\end{equation}
+\begin{enumerate}
+\item x服从伯努利分布
+\begin{equation}
+\begin{aligned}
+p(x, y) =\prod_{k=1}^K[\pi_k\mu_k^x(1-\mu_k)^{1-x}]^{y_k}
+\end{aligned}
+\end{equation}
+
+\item x服从离散分布
+\begin{equation}
+\begin{aligned}
+p(x, y) =\prod_{c=1}^C[\pi_k\prod_{k=1}^K\mu_{ck}^{x_k}]^{y_c}
+\end{aligned}
+\end{equation}
+
+\end{enumerate}
+\end{enumerate}
+
+\subsection{极大似然估计}
+\begin{enumerate}
+\item $y\sim B(y|\pi), x\sim B(x|\mu)$
+\begin{equation}
+logp(D) = \sum_{n=1}^N
+\{(1-y)[log(1-\pi) + xlog\mu_0 + (1-x)log(1-\mu_0)]
++ y[log\pi + xlog\mu_1 + (1-x)log(1-\mu_1)]\}
+\end{equation}
+
+令
+\begin{equation}
+\frac{\partial logp(D)}{\partial \pi}
+= \frac{1}{\pi}\sum_{n=1}^Ny - \frac{1}{1-\pi}\sum_{n=1}^N(1-y)
+=0
+\end{equation}
+得
+\begin{equation}
+\pi = \frac{\sum y}{N}
+\end{equation}
+
+令
+\begin{equation}
+\frac{\partial logp(D)}{\partial \mu_1}
+= \frac{1}{\mu_1}\sum_{n=1}^Nyx - \frac{1}{1-\mu_1}\sum_{n=1}^Ny(1-x)
+=0
+\end{equation}
+得
+\begin{equation}
+\mu_1 = \frac{\sum xy}{\sum y}
+\end{equation}
+
+令
+\begin{equation}
+\frac{\partial logp(D)}{\partial \mu_0}
+= \frac{1}{\mu_0}\sum_{n=1}^N(1-y)x - \frac{1}{1-\mu_0}\sum_{n=1}^N(1-y)(1-x)
+=0
+\end{equation}
+得
+\begin{equation}
+\mu_0 = \frac{\sum x(1-y)}{\sum (1-y)}
+\end{equation}
+
+\item $y\sim Cat(y|\pi), x\sim Cat(x|\mu)$
+\begin{equation}
+\begin{aligned}
+logp(D) =\sum_{n=1}^N\sum_{c=1}^Cy_{nc}
+[log\pi_k + \sum_{k=1}^Kx_{nk}log\mu_{ck}]
+\end{aligned}
+\end{equation}
+另外
+\begin{equation}
+\sum_{k=1}^K\mu_{ck} = 1
+\end{equation}
+最大化下面的式子
+\begin{equation}
+\begin{aligned}
+\sum_{n=1}^N\sum_{c=1}^Cy_{nc}[log\pi_k + \sum_{k=1}^Kx_{nk}log\mu_{ck}]
++ \lambda (\sum_{k=1}^K\mu_{ck} - 1)
+\end{aligned}
+\end{equation}
+得
+\begin{equation}
+\mu_{ck} = \frac{\sum_{n=1}^N y_{nc}x_{nk}}{\sum_{n=1}^N\sum_{k=1}^K
+y_{nc}x_{nk}}
+= \frac{N_{ck}} {N_c}
+\end{equation}
+
+
+\end{enumerate}
+
+\section{朴素贝叶斯}
+似然函数
+\begin{equation}
+p(D|\pi, \theta) = \prod_{n=1}^N\{
+(\prod_{c=1}^C\pi_c^{y_c^n})
+(\prod_{m=1}^M\prod_{c=1}^Cp(x_m^n|\theta_{mc})^{y_c^n}
+\}
+\end{equation}
+
+对数似然函数
+\begin{equation}
+logp(D|\pi, \theta) = \sum_{c=1}^CN_clog\pi_c
++ \sum_{m=1}^M\sum_{c=1}^C\sum_{n=1}^Ny_c^nlogp(x_m^n|\theta_{mc})
+\end{equation}
+用极大似然估计, $\pi_c = \frac{N_c}{N}$
+
+以上是mlapp中给出的公式，太复杂，不够简练，简练的公式容易让人记忆，
+容易提炼出本质。下面给出一种紧凑的格式。
+
+似然函数
+\begin{equation}
+p(D|\pi, \theta) = \prod_{c,n}
+[\pi_c\prod_mp(x_m^n|\theta_{mc})]^{y_c^n}
+\end{equation}
+
+对数似然函数
+\begin{equation}
+logp(D|\pi, \theta) = \sum_{c, n}y_c^n
+[log\pi_c + \sum_mlogp(x_m^n|\theta_{mc})]
+\end{equation}
+\subsection{贝努力分布}
+
+\begin{equation}
+p(x_m^n|\theta_{mc}) = p(x_m^n|\mu_{mc})
+= \mu_{mc}^{x_m^n}(1 - \mu_{mc})^{1 - x_m^n}
+\end{equation}
+
+对数似然函数
+
+\begin{equation}
+\begin{aligned}
+logp(D|\pi, \theta) = \sum_{c,n}
+y_c^n\{log\mu_c + \sum_m[x_m^nlog\mu_{mc} + (1 - x_m^n)
+log(1 - \mu_{mc})]\}
+\\= \sum_c\{
+N_clog\pi_c + \sum_m[N_{mc}log\mu_{mc} 
++ (N_c - N_{mc})log(1-\mu_{mc})]
+\}
+\end{aligned}
+\end{equation}
+
+用极大似然估计
+
+\begin{equation}
+\frac{\partial logp(D|\pi, \theta)} {\partial \mu_{mc}}
+= \mu^{-1}_{mc}N_{mc} - (1 - \mu_{mc})^{-1}(N_c - N_{mc})
+\end{equation}
+
+令
+\begin{equation}
+\frac{\partial logp(D|\pi, \theta)} {\partial \mu_{mc}}
+= 0
+\end{equation}
+得
+$\mu_{mc} = \frac{N_{mc}}{N_c}$
+
+\subsection{离散分布}
+\begin{equation}
+Cat(x_m^n|\mu_{mc}) = \prod_{k = 1}^K\mu_{mck}^{x_{mk}^n}
+\end{equation}
+
+离散分布似然函数
+\begin{equation}
+p(D|\pi, \theta) = \prod_{n=1}^N\{
+(\prod_{c=1}^C\pi_c^{y_c^n})
+(\prod_{m=1}^M\prod_{c=1}^C
+\{\prod_{k = 1}^K\mu_{mck}^{x_{mk}^n}
+\}^{y_{c}^n}
+\}
+\end{equation}
+写成简洁格式如下：
+\begin{equation}
+p(D|\pi, \theta) = \prod_{c, n}
+(\pi_c\prod_{m, k}\mu_{mck}^{x_{mk}^n})^{y_c^n}
+\end{equation}
+相应的对数似然函数
+\begin{equation}
+\begin{aligned}
+logp(D|\pi, \theta) = \sum_{c, n}y_c^n[log\pi_c + \sum_{m, k}x_{mk}^nlog\mu_{mck}]
+\\= \sum_c[N_clog\pi_c + \sum_{m, k}log\mu_{mck}\sum_ny_c^nx_{mk}^n]
+\\=\sum_c[N_clog\pi_c + \sum_{m,k}N_{mck}log\mu_{mck}]
+\end{aligned}
+\end{equation}
+注意到
+\begin{equation}
+\sum_{m,k} \mu_{mck} = 1
+\end{equation}
+因此，可以通过最大化下面的式子求解：
+\begin{equation}
+\sum_{m,c,k}N_{mck}log\mu_{mck} +\lambda(\sum_{m,k}\mu_{mck} -1)
+\end{equation}
+求导后，可得：
+\begin{equation}
+\mu_{mck} = -\frac{N_{mck}}{\lambda}
+\end{equation}
+根据条件概率定义：$\sum_{m,k}\mu_{mck} = 1$, 而不是$\sum_{m,c,k}\mu_{mck} = 1$, 
+得$\mu_{mck} = \frac{N_{mck}} {N_c}$
+从以上可以看出，朴素贝叶斯提供了一个框架，针对不同特征的具体分布，
+代入基本公式可以用极大似然求出参数。
 
 \section{判别式模型}
 \subsection{概率回归}
@@ -15,4 +242,7 @@ f(a) = E(a) = \int_{-\infty}^aN(\theta|0, 1)d\theta)
 \end{enumerate}
 \subsection{标准链接函数}
 \section{问题}
-公式4.146
+\begin{enumerate}
+\item 公式4.146
+\item kernel logistiction regression
+\end{enumerate}

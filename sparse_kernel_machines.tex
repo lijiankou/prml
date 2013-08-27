@@ -1,6 +1,7 @@
 \chapter{Sparse kernel machines}
 \section{问题}
 \begin{enumerate}
+\item 为什么不能用解决线性回归的方式进行分类？
 \item 当数据量很大的时候，计算所有核函数对很复杂，
 如何只利用局部核解决问题？ 即如何通过少量核求解问题？
 \item 什么是无穷维？
@@ -10,7 +11,14 @@
 \item svm、rvm、type2极大似然估计、高斯过程的关系?
 \item 对偶、非参方法、核?
 \item 统计学习方法原始问题和对偶问题的解的大小?
+\item 为什么最大间隔的分割面最好？
+\item 为什么喜欢小的$w$，因为喜欢光滑的，即当x变化时，y的变化不大。
+当需要光滑的曲线时，参数w应该是小的。
 \end{enumerate}
+
+\section{SVM核心思想}
+引入核，通过升维的方式处理将线性不可分的问题变为
+线性可分的问题。
 
 \section{最大间隔分类器}
 \subsection{损失函数}
@@ -23,3 +31,63 @@ L(w) = \sum_{n=1}^N E_\infty(y(x_n)t_n - 1) + \lambda||w||^2
 \begin{equation}
 L(w) = C\sum_{n=1}^N\xi_n + \frac{1}{2}||w||^2
 \end{equation}
+
+\section{龙星计划}
+\subsection{损失函数}
+\begin{equation} 
+L(w) = L(w, b) + \lambda||w||^2
+\end{equation}
+
+\subsection{最大间隔与w的直观解释}
+为什么最大间隔等价于最小化$||w||^2$。当w小的时候，
+x变化引起y的变化较小，因此对于同样的y之间的间隔，
+需要的x的间隔就会变大。
+为什么要最大间隔呢：从几何上说，最大间隔可以减少
+误分样本的个数，从而泛化能力好。
+从光滑性的角度，间隔越大，函数越光滑，
+我们需要小$||w||$，即我们希望x差别
+小的时候，对应的y也相似。这一点可以从核的角度解释，
+也可以和高斯过程建立联系。
+稳定性，最大间隔比较稳定。
+这里面包含着一个意思，最大间隔等价于最优光滑性，用数学表示
+如下：
+\begin{equation}
+\underset{w}{\operatorname{arg max}}\frac{1}{w}
+\equiv \underset{w}{\operatorname{arg min}}w^Tw
+\end{equation}
+
+\subsection{特征分解}
+矩阵可以进行特征分解，
+\begin{equation} 
+\Sigma = \sum_{m=1}^M\lambda_mu_mu^T_m
+\end{equation}
+
+函数也可以进行特征分解，
+\begin{equation} 
+K(x, y) = \sum_{m=1}^\infty\gamma_m\phi_m(x)\phi_m(y)
+\end{equation}
+\begin{equation} 
+f(x) = \sum_{m=1}^\infty\gamma_m\phi_m(x)
+\end{equation}
+
+\subsection{kernel函数}
+用什么样的kernel函数，用什么样的特征，使用什么样的basic function,
+使用什么样的正规则，加什么样的先验，实质都是一个事。
+因此最大间隔就相当于建立了一个正则项。
+对比岭回归中的正则项：
+\begin{equation}
+L(w) = \sum_{n=1}^N(t_n - w^Tx_n)^2 + \frac{1}{2}w^Tw
+\end{equation}
+
+\section{总结}
+\begin{enumerate}
+\item 泛化能力好，不容易过拟合
+\cite{longxing2012machinelearning}
+\end{enumerate}
+\section{相关资料}
+\begin{enumerate}
+\item Andrew Ng 视频
+\item 龙星计划
+\item MLapp
+\item 统计机器学习
+\end{enumerate}
