@@ -1,21 +1,4 @@
 \chapter{Sparse kernel machines}
-\section{问题}
-\begin{enumerate}
-\item 为什么不能用解决线性回归的方式进行分类？
-\item 当数据量很大的时候，计算所有核函数对很复杂，
-如何只利用局部核解决问题？ 即如何通过少量核求解问题？
-\item 什么是无穷维？
-\item 对偶表示的好处?
-\item 为什么提出svm?
-\item svm为什么需要正定核?
-\item svm、rvm、type2极大似然估计、高斯过程的关系?
-\item 对偶、非参方法、核?
-\item 统计学习方法原始问题和对偶问题的解的大小?
-\item 为什么最大间隔的分割面最好？
-\item 为什么喜欢小的$w$，因为喜欢光滑的，即当x变化时，y的变化不大。
-当需要光滑的曲线时，参数w应该是小的。
-\end{enumerate}
-
 \section{SVM核心思想}
 引入核，通过升维的方式处理将线性不可分的问题变为
 线性可分的问题。
@@ -56,6 +39,16 @@ x变化引起y的变化较小，因此对于同样的y之间的间隔，
 \equiv \underset{w}{\operatorname{arg min}}w^Tw
 \end{equation}
 
+光滑性的描述
+
+\begin{equation}
+f(x) = w^Tx
+\end{equation}
+
+\begin{equation}
+|\frac{\partial f(x)}{\partial x}| = |w|
+\end{equation}
+
 \subsection{特征分解}
 矩阵可以进行特征分解，
 \begin{equation} 
@@ -79,6 +72,72 @@ f(x) = \sum_{m=1}^\infty\gamma_m\phi_m(x)
 L(w) = \sum_{n=1}^N(t_n - w^Tx_n)^2 + \frac{1}{2}w^Tw
 \end{equation}
 
+\section{RVM}
+\subsection{RVM回归}
+\begin{equation}
+p(t|x, w,\beta) = N(t|y(x),\beta^{-1})
+\end{equation}
+
+\begin{equation}
+y(x) = \sum_{n=1}^Nw_n\Phi_n(x) = w^T\Phi(x)
+\end{equation}
+
+\begin{equation}
+p(t|w,\beta) = \prod_{n=1}^Np(t_n|x_n, w, \beta^{-1})
+\end{equation}
+
+\begin{equation}
+p(w|\alpha) = \prod_{n=1}^NN(w_n|0, \alpha_n^{-1})
+\end{equation}
+
+\begin{equation}
+p(w|\alpha, \beta) = N(w|m, \Sigma)
+\end{equation}
+
+\begin{equation}
+m = \beta\Sigma\Phi^Tt
+\end{equation}
+
+\begin{equation}
+\Sigma = (diag(\alpha_n) + \beta\Phi^T\Phi)^{-1}
+\end{equation}
+
+\begin{equation}
+p(t|\alpha, \beta) = \int p(t|w,\beta)p(w|\alpha)dw
+\end{equation}
+
+\begin{equation}
+\ln p(t|\alpha, \beta) = \ln N(t|0, C)
+= -\frac{1}{2}\{N \ln(2\pi) + \ln|C| + t^TC^{-1}t\}
+\end{equation}
+
+\begin{equation}
+C = \beta^{-1}I + \Phi A^{-1}\Phi^T
+\end{equation}
+
+\begin{equation}
+C = \beta^{-1}I + \sum_{m\neq n}\alpha_{m}^{-1}\phi_m\phi_m^T 
++ \alpha_n^{-1}\phi_n\phi_n^T
+= C_{-n} + \alpha_n^{-1}\phi_n\phi_n^T 
+\end{equation}
+
+\begin{equation}
+L(\alpha) = L(\alpha_{-n}) + \lambda(\alpha_n)
+\end{equation}
+
+\begin{equation}
+\lambda(\alpha_n) = \frac{1}{2}
+[\ln \alpha_n - \ln(\alpha_n + s_n) + \frac{q_n^2}{\alpha_n + s_n}]
+\end{equation}
+
+\begin{equation}
+s_n = \phi^TC_{-n}^{-1}\phi_n
+\end{equation}
+
+\begin{equation}
+q_n = \phi^TC_{-n}^{-1}t
+\end{equation}
+
 \section{总结}
 \begin{enumerate}
 \item 泛化能力好，不容易过拟合
@@ -91,3 +150,22 @@ L(w) = \sum_{n=1}^N(t_n - w^Tx_n)^2 + \frac{1}{2}w^Tw
 \item MLapp
 \item 统计机器学习
 \end{enumerate}
+
+\section{问题}
+\begin{enumerate}
+\item 为什么不能用解决线性回归的方式进行分类？
+\item 当数据量很大的时候，计算所有核函数对很复杂，
+如何只利用局部核解决问题？ 即如何通过少量核求解问题？
+\item 什么是无穷维？
+\item 对偶表示的好处?
+\item 为什么提出svm?
+\item svm为什么需要正定核?
+\item svm、rvm、type2极大似然估计、高斯过程的关系?
+\item 对偶、非参方法、核?
+\item 统计学习方法原始问题和对偶问题的解的大小?
+\item 为什么最大间隔的分割面最好？
+\item 为什么喜欢小的$w$，因为喜欢光滑的，即当x变化时，y的变化不大。
+当需要光滑的曲线时，参数w应该是小的。
+\end{enumerate}
+
+
