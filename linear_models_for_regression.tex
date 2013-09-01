@@ -1,1 +1,27 @@
 \chapter{Linear models and regression}
+\section{贝叶斯线性回归}
+\subsection{参数分布}
+
+\begin{equation}
+p(w|t) = N(w|m_N, S_N)
+\end{equation}
+
+\begin{equation}
+m_N = S_N(S_0^{-1}m_0 + \beta \Phi^Tt)
+\end{equation}
+
+\begin{equation}
+S_N^{-1} = S_0^{-1} + \beta\Phi^T\Phi
+\end{equation}
+
+\begin{equation}
+p(w|t) = N(w|0, \alpha^{-1}I)
+\end{equation}
+
+\begin{equation}
+m_N = \beta S_N\Phi^Tt 
+\end{equation}
+
+\begin{equation}
+S_N^{-1} = \alpha I + \beta \Phi^T\Phi
+\end{equation}
