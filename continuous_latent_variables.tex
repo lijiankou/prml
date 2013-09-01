@@ -1,13 +1,5 @@
 \chapter{Continuous latent variables}
-\section{问题}
-\begin{enumerate}
-\item PPCA与产生式模型
-\item 从自由度理解PCA
-\item PCA、PPCA和FA\\
-PCA强调数据空间到隐空间，PPCA和FA强调隐空间到数据空间
-\item PCA与fisher算法之间是什么关系?(PCA无监督、fisher有监督)
-\item PCA与岭回归
-\end{enumerate}
+
 \section{PCA}
 \begin{equation}
 J(W,Z) = \frac{1}{N}\sum_{n=1}^N||x_i - Wz_i||^2
@@ -24,7 +16,119 @@ J(W,Z) = ||\Phi - ZW^T||^2_F
 \subsection{最大化方差}
 \begin{equation}
 var(ux) = \frac{1}{N}
-\sum_{n=1}^N\{u_1^Tx_n - u_1^T\bar{x}\}^2 = u_1^TSu_1
+\sum_{n=1}^N\{u^Tx_n - u^T\bar{x}\}^2 = u^TSu
 \end{equation}
+
+\begin{equation}
+u^Tu = 1
+\end{equation}
+
+\begin{equation}
+L(u) = u^TSu + \lambda(1 - u^Tu)
+\end{equation}
+
+\begin{equation}
+Su = \lambda u
+\end{equation}
+
+\begin{equation}
+var(ux) = u^TSu = \lambda
+\end{equation}
+
+\subsection{PCA算法}
+\begin{enumerate}
+\item 协方差矩阵
+\begin{equation}
+ \Sigma = \frac{1}{N}\sum_{n=1}^N(x_nx_n^T)^2
+\end{equation}
+
+\item SVD分解
+\begin{equation}
+ \Sigma = [U, S, V]
+\end{equation}
+
+\begin{equation}
+W = U_{1:k}
+\end{equation}
+
+\item数据压缩
+\begin{equation}
+ z = W^Tx
+\end{equation}
+
+\begin{equation}
+ Z = XW 
+\end{equation}
+\end{enumerate}
+
+
+\subsection{维数选取}
+
+\begin{enumerate}
+\item 均方映射误差
+\begin{equation}
+ E(c) = \frac{1}{N}\sum_{n=1}^N(x_n - x_{app})^2
+\end{equation}
+\item 数据方差
+
+\begin{equation}
+ Cov(d) = \frac{1}{N}\sum_{n=1}^Nx_n^2
+\end{equation}
+
+\item 判断标准
+\begin{equation}
+\frac{E(c)}{Cov(d)} \leq \theta_0
+\end{equation}
+
+\item 特征值判断
+\begin{equation}
+\Sigma = [U, S, V]
+\end{equation}
+
+\begin{equation}
+\frac{\sum_{i = 1}^k S_{ii}}{\sum_{i = 1}^M S_{ii}} \leq \theta_0
+\end{equation}
+\end{enumerate}
+
+\subsection{数据解压}
+
+\subsection{PCA应用}
+\begin{enumerate}
+\item 数据压缩和存储
+\item 数据可视化
+\item 加快学习\\
+只能在训练集上进行压缩，在原数据上进行测试
+\item 不可以用来避免过拟合
+\end{enumerate}
+本节内容来源\cite{andrew2013courseramachinelearning}
 \section{PPCA}
 \section{FA}
+
+\section{问题}
+\begin{enumerate}
+\item PPCA与产生式模型
+\item 从自由度理解PCA
+\item PCA、PPCA和FA\\
+PCA强调数据空间到隐空间，PPCA和FA强调隐空间到数据空间
+\item PCA与fisher算法之间是什么关系?(PCA无监督、fisher有监督)
+\item PCA与岭回归
+\item PCA的解是否唯一，当最大化方差的时候，旋转主成份的基，解不变。
+\item PCA与SVD的关系
+\item PCA如何解压缩？如何求解压矩阵
+\end{enumerate}
+\subsection{PCA与SVD的关系}
+PCA强调对数据进行降维，这种降维方式可以通过协方差矩阵的
+特征值和特征向量得到。SVD是对数据进行矩阵分解，得到$USV^T$。
+两者侧重点不同，一是降维，一是分解。二者联系很大，
+因为它们都与特征值（奇异值有关）。
+\subsection{FA中W的不可判别性}
+用最大似然估计出现$WW^T$,因此W不在唯一。这是否说明具体的基与
+问题是透明的，为什么需要W呢，我们只需要$WW^T$可以解决问题吗？
+在支持向量机中，通过对偶的形势$x^Tx$的形势，从而可以用核
+隐性的升维。这里和核又有什么联系呢？在什么场景中可以只用到
+$WW^T$就可以了。
+
+\subsubsection{场景一 低维度分类}
+低维度分类$z = W^Tx$,因此在低维度分类的时候用到如下核
+$z^Tz = x^TWW^Tx$,这时候就不再需要W。 
+
