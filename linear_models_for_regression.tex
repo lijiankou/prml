@@ -1,27 +1,88 @@
-\chapter{Linear models and regression}
+\chapter{Linear models for regression}
+\label{linear_models_regression}
 \section{贝叶斯线性回归}
 \subsection{参数分布}
+公式符号与第\ref{probability_distribution}、
+\ref{sparse_kernel_machines}章保持一致, 见Notation.
 
+\begin{enumerate}
+\item 参数后验分布一般形式
 \begin{equation}
-p(w|t) = N(w|m_N, S_N)
+p(w|t) = N(w|\mu_N, \Sigma_N)
 \end{equation}
 
 \begin{equation}
-m_N = S_N(S_0^{-1}m_0 + \beta \Phi^Tt)
+\mu_N = \Sigma_N(\Sigma_0^{-1}m_0 + \beta \Phi^Tt)
 \end{equation}
 
 \begin{equation}
-S_N^{-1} = S_0^{-1} + \beta\Phi^T\Phi
+\Sigma_N^{-1} = \Sigma_0^{-1} + \beta\Phi^T\Phi
 \end{equation}
 
+\item 参数后验分布常用形式
 \begin{equation}
 p(w|t) = N(w|0, \alpha^{-1}I)
 \end{equation}
 
 \begin{equation}
-m_N = \beta S_N\Phi^Tt 
+\mu_N = \beta \Sigma_N\Phi^Tt 
 \end{equation}
 
 \begin{equation}
-S_N^{-1} = \alpha I + \beta \Phi^T\Phi
+\Sigma_N^{-1} = \alpha I + \beta \Phi^T\Phi
 \end{equation}
+
+\end{enumerate}
+参数分布验精度矩阵等于先验精度矩阵加数据精度矩阵
+
+\section{经验贝叶斯}
+同名经验贝叶斯，第二类极大似然估计、广义极大似然估计、模型近似
+
+\begin{equation}
+p(t|D) = \int\int\int p(t|w, \beta)p(w|\alpha, \beta)
+p(\alpha,\beta|D)dwd\alpha d\beta
+\end{equation}
+
+近似预测
+
+\begin{equation}
+p(t|D) \simeq p(t|\hat{\alpha}, \hat{\beta}) = \int p(t|w, \hat \beta)
+p(w|\hat \alpha, \hat \beta)dw
+\end{equation}
+
+\begin{equation}
+\frac{dm_N}{d\alpha} = A^{-1}m_N
+\end{equation}
+
+\begin{equation}
+\frac{dm_N^T}{d\alpha} = m_N^TA^{-1}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+E(m_N) = \frac{\beta}{2}
+(t^Tt - 2t^T\Phi m_N + m_N^T\Phi^T\Phi m_N) + \frac{\alpha}{2}m_N^Tm_N
+= \frac{\beta}{2}t^Tt - \beta t^T\Phi m_N + \frac{1}{2}m_N^Tm_N \\
+= \frac{\beta}{2}t^Tt - m_N^TAm_N + \frac{1}{2}m_N^TAm_N 
+= \frac{\beta}{2}t^Tt - \frac{1}{2}m_N^TAm_N
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+dE(m_N) = -\frac{1}{2}dm_N^TAm_N = -\frac{1}{2}\beta^2dt^T\Phi A^{-1}AA^{-1}
+\Phi^Tt = \frac{1}{2}\beta^2t\Phi A^{-1}A^{-1}\Phi^Tt
+= \frac{1}{2}m_N^Tm_N
+\end{aligned}
+\end{equation}
+
+\subsection{问题}
+\begin{enumerate}
+\item 极大似然使用条件
+\end{enumerate}
+
+\section{联系}
+\begin{enumerate}
+\item 经验贝叶斯、模型估计，贝叶斯线性回归，贝叶斯线性分类
+、RVM回归，RVM分类，高斯过程
+\end{enumerate}
