@@ -1,4 +1,6 @@
 \chapter{Sparse kernel machines}
+\label{sparse_kernel_machines}
+
 \section{SVM核心思想}
 引入核，通过升维的方式处理将线性不可分的问题变为
 线性可分的问题。
@@ -74,24 +76,20 @@ L(w) = \sum_{n=1}^N(t_n - w^Tx_n)^2 + \frac{1}{2}w^Tw
 
 \section{RVM}
 \subsection{RVM回归}
+基核独立参
+\begin{enumerate}
+\item 似然函数
 \begin{equation}
-p(t|x, w,\beta) = N(t|y(x),\beta^{-1})
+p(t|w,\beta) = \prod_{n=1}^Np(t_n|w^Tx_n, \beta^{-1})
 \end{equation}
-
-\begin{equation}
-y(x) = \sum_{n=1}^Nw_n\Phi_n(x) = w^T\Phi(x)
-\end{equation}
-
-\begin{equation}
-p(t|w,\beta) = \prod_{n=1}^Np(t_n|x_n, w, \beta^{-1})
-\end{equation}
-
+\item 先验
 \begin{equation}
 p(w|\alpha) = \prod_{n=1}^NN(w_n|0, \alpha_n^{-1})
 \end{equation}
 
+\item 后验
 \begin{equation}
-p(w|\alpha, \beta) = N(w|m, \Sigma)
+p(w|X, \alpha, \beta) = N(w|m, \Sigma)
 \end{equation}
 
 \begin{equation}
@@ -101,7 +99,7 @@ m = \beta\Sigma\Phi^Tt
 \begin{equation}
 \Sigma = (diag(\alpha_n) + \beta\Phi^T\Phi)^{-1}
 \end{equation}
-
+\item 经验贝叶斯
 \begin{equation}
 p(t|\alpha, \beta) = \int p(t|w,\beta)p(w|\alpha)dw
 \end{equation}
@@ -110,6 +108,8 @@ p(t|\alpha, \beta) = \int p(t|w,\beta)p(w|\alpha)dw
 \ln p(t|\alpha, \beta) = \ln N(t|0, C)
 = -\frac{1}{2}\{N \ln(2\pi) + \ln|C| + t^TC^{-1}t\}
 \end{equation}
+
+\end{enumerate}
 
 \begin{equation}
 C = \beta^{-1}I + \Phi A^{-1}\Phi^T
@@ -151,6 +151,14 @@ q_n = \phi^TC_{-n}^{-1}t
 \item 统计机器学习
 \end{enumerate}
 
+\section{拉格郞日对偶性}
+
+\begin{equation}
+\underset{\lambda:\lambda\geq 0}{max}\ \underset{x}{min}\ L(x, \lambda) \ \ (6)
+\end{equation}
+\begin{equation}
+\nabla_xL(x^*, \lambda^*) = 0
+\end{equation}
 \section{问题}
 \begin{enumerate}
 \item 为什么不能用解决线性回归的方式进行分类？
