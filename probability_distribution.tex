@@ -1,4 +1,5 @@
 \chapter{Probability Distribution}
+\label{probability_distribution}
 
 \section{高斯分布}
 \begin{equation}
@@ -70,6 +71,10 @@ p(x|y) = N(x|\Sigma\{A^TL(y-b) + \Lambda\mu\}, \Sigma)
 \Sigma = (\Lambda + A^TLA)^{-1}
 \end{equation}
 
+\subsection{伽玛分布}
+\begin{equation}
+Ga(x|a, b) = \frac{b^a}{\Gamma(a)}x^{a-1}e^{-bx}
+\end{equation}
 \subsection{指数族}
 
 \begin{enumerate}
@@ -85,12 +90,12 @@ p(x|\eta) = h(x)g(\eta)exp\{\eta^Tu(x)\}
 \item 似然函数
 \begin{equation}
 p(X|\eta) = (\prod_{n=1}^Nh(x_n))g(\eta)^N \exp \{
-\eta^T \samplesum u(x_n)
+\eta^T \sum_{n=1}^N u(x_n)
 \}
 \end{equation}
 \item 充分统计
 \begin{equation}
--\nabla\ln(\eta_{ML}) = \frac{1}{N}\samplesum{u(x_n)}
+-\nabla\ln(\eta_{ML}) = \frac{1}{N}\sum_{n=1}^N{u(x_n)}
 \end{equation}
 \end{enumerate}
 
