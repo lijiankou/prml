@@ -98,7 +98,10 @@ W = U_{1:k}
 \item 数据可视化
 \item 加快学习\\
 只能在训练集上进行压缩，在原数据上进行测试
-\item 不可以用来避免过拟合
+\item 不可以用来避免过拟合\cite{murphy2012machine,andrew2013courseramachinelearning}
+\\ 如何理解不可以用PCA来避免过拟合，就是说如果原始数据
+就是过拟合的，那么在新的PCA中回归或者分类的效果也不会好。
+过拟合应该用岭回归，即软权重。
 \end{enumerate}
 本节内容来源\cite{andrew2013courseramachinelearning}
 \section{PPCA}
@@ -111,7 +114,7 @@ W = U_{1:k}
 \item PCA、PPCA和FA\\
 PCA强调数据空间到隐空间，PPCA和FA强调隐空间到数据空间
 \item PCA与fisher算法之间是什么关系?(PCA无监督、fisher有监督)
-\item PCA与岭回归
+\item PCA与岭回归 \cite{murphy2012machine}
 \item PCA的解是否唯一，当最大化方差的时候，旋转主成份的基，解不变。
 \item PCA与SVD的关系
 \item PCA如何解压缩？如何求解压矩阵
@@ -131,4 +134,5 @@ $WW^T$就可以了。
 \subsubsection{场景一 低维度分类}
 低维度分类$z = W^Tx$,因此在低维度分类的时候用到如下核
 $z^Tz = x^TWW^Tx$,这时候就不再需要W。 
+
 
