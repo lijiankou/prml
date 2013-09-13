@@ -1,1 +1,44 @@
 \chapter{Graphical models}
+\section{简介}
+图模型提供了一个工具，描述问题，模拟问题，推理问题\cite{longxing2012machinelearning}.
+三个基本问题，
+\begin{enumerate}
+\item 有了问题，如何模拟，怎么描述，把自己的先验知识放到问题里面; 
+\item 推理，有了模型, 可以去回答什么问题；
+\item 学习，参数不了解，结构化的东西不了解，通知数据学习参数和结构；
+\end{enumerate}
+用紧凑的方式表示变量之间的关系。
+\begin{enumerate}
+\item 什么样的图模型更适合一个问题？
+\item 对定一个图模型，求P(x|y)
+\item 如何得到图模型的结构和参数
+\end{enumerate}
+
+\section{贝叶斯网}
+\subsection{有向分离}
+\begin{enumerate}
+\item 高斯分布
+\begin{equation}
+p(D|\mu) = \prod_{n=1}^Np(x_n|\mu)
+\end{equation}
+
+\begin{equation}
+p(D) \neq \prod_{n=1}^Np(x_n)
+\end{equation}
+
+\item 朴素贝叶斯
+\begin{equation}
+p(x|z) = \prod_{m=1}^M(x_m|z)
+\end{equation}
+\end{enumerate}
+
+\subsubsection{有向图过滤器}
+有向分离是判断贝叶斯网中两个节点是否条件独立的方法。
+图的表达能力，越连通表达能力越强，越独立表达能力越弱。
+全联全概率或者全连通图表达能力最强，可以表达一切分布，
+因此可以让所有分布都通过。对于一个完全分解的图，表达能力最弱。
+\section{概念}
+\begin{enumerate}
+\item 条件独立性
+\item 有向分离
+\end{enumerate}
