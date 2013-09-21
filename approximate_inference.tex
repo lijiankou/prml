@@ -1,7 +1,50 @@
 \chapter{Approximate inference}
+
+动机，准确推理不可行，转化为用一些可行的分布去近似那些不可
+行的分布, 在保证可行的情况下，尽可能提供丰富的分布，从中找出
+最优的。
 \section{变分推理}
-\section{可分解分布}
+\begin{enumerate}
+\item 变化推理的目标,后验分布，似然函数
 \begin{equation}
-q(Z) = \prod_{m=1}^Mq_m(Z_m)
+p(x)
 \end{equation}
+\begin{equation}
+p(z|x)
+\end{equation}
+
+\item 对数似然等于联合相对熵减去条件相对熵(对数似然分解)
+\begin{equation}
+\ln p(x) = L(q) + KL(q||p)
+\end{equation}
+\begin{equation}
+L(q) = KL(q||p(x,z))
+\end{equation}
+\begin{equation}
+KL(q||p) = KL(q||p(x|z))
+\end{equation}
+与以往不同，这里没有出现参数$\theta$，这是因为在这里所有的参数也
+看作是随机变量，因此Z已经包含了参数。
+\end{enumerate}
+
+\section{因式分布}
+
+\begin{equation}
+q(z) = \prod_{m=1}^Mq_m(z_m)
+\end{equation}
+参照模图型分解
+\subsection{最优解}
+因式最优解等于非因式联合期望
+\begin{equation}
+\ln q_j = E_{-j}[\ln p(x, z)] + const
+\end{equation}
+
+\section{问题}
+\begin{enumerate}
+\item 为什么使用近似推理？
+\item 什么是变分？
+\item 变分的关键地方是什么？
+\item EM算法用到了哪些技巧？是否可以重用？
+\item 分离技巧，RVM，变分都有体现。
+\end{enumerate}
 
