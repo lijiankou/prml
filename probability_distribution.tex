@@ -72,9 +72,30 @@ p(x|y) = N(x|\Sigma\{A^TL(y-b) + \Lambda\mu\}, \Sigma)
 \end{equation}
 
 \subsection{伽玛分布}
+精度的符号问题，$\alpha$是一种常用记号，在线性回归里面
+经常使用$\alpha,\beta$，使用$\lambda$也很容易理解，在线性代数里面
+$\lambda$经常用表示特征值，协方差矩阵用SAS分解以后，就是一个对角
+阵，每个元素就是特征值，这也就很容易理解为什么精度矩阵用$\Lambda$了，
+因为它本就是特征值的矩阵。
+伽玛分布常作为高斯分布的共轭出现。
+
 \begin{equation}
-Ga(x|a, b) = \frac{b^a}{\Gamma(a)}x^{a-1}e^{-bx}
+Ga(\lambda|a, b) = \frac{b^a}{\Gamma(a)}\lambda^{a-1}e^{-b\lambda}
+= z \lambda^{a-1}e^{-b\lambda}
 \end{equation}
+
+\begin{equation}
+p(x|\lambda) = \prod_{n=1}^NN(x_n|\mu, \lambda^{-1})
+= z \lambda^{\frac{N}{2}}e^{-\frac{\lambda}{2}\sum_{n=1}^N(x_n-\mu)^2}
+= z \lambda^ke^{-l \lambda}
+\end{equation}
+
+\subsection{高斯伽玛分布}
+\begin{equation}
+p(\mu, \lambda) = p(\mu|\lambda)p(\lambda)
+= N(\mu|\mu_0, (\beta \lambda)^{-1})Ga(\lambda|a, b)
+\end{equation}
+
 \subsection{指数族}
 
 \begin{enumerate}
